@@ -3,8 +3,17 @@
   "short_name": "觉醒",
   "description": "帮助年轻人建立自律习惯的个人成长系统",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#0b0b0f",
-  "theme_color": "#0b0b0f",
-  "orientation": "portrait"
+  "background_color": "#eef0f2",
+  "theme_color": "#1b1f26",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
 }
