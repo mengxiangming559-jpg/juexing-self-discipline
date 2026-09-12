@@ -2,76 +2,110 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#1b1f26">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0b0f">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="manifest" href="./manifest.json">
   <title>觉醒 · 自律系统</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background:#0b0b0f; color:#fff; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; min-height:100vh; }
-    .app { width:100%; max-width:480px; min-height:100vh; margin:auto; padding:28px 20px 40px; }
-    .top { display:flex; justify-content:space-between; align-items:center; margin-bottom:38px; }
-    .logo { font-size:22px; font-weight:700; letter-spacing:3px; }
-    .day { font-size:12px; color:#777; letter-spacing:1px; }
-    .quote { text-align:center; margin-bottom:35px; }
-    .quote-small { font-size:13px; color:#777; margin-bottom:12px; }
-    .quote-main { font-size:21px; line-height:1.6; font-weight:600; }
-    .score { background:#141419; border:1px solid #24242b; border-radius:24px; padding:28px; text-align:center; margin-bottom:20px; }
-    .score-title { color:#888; font-size:13px; margin-bottom:12px; }
-    .score-number { font-size:64px; font-weight:800; line-height:1; margin-bottom:15px; }
-    .progress { height:5px; background:#292930; border-radius:10px; overflow:hidden; }
-    .progress-bar { width:40%; height:100%; background:#fff; border-radius:10px; transition:width .25s ease; }
-    .tasks { background:#141419; border:1px solid #24242b; border-radius:24px; padding:20px; margin-bottom:20px; }
-    .tasks-title { font-size:15px; margin-bottom:16px; }
-    .task { display:flex; align-items:center; gap:12px; padding:13px 0; border-bottom:1px solid #222228; }
-    .task:last-child { border-bottom:none; }
-    .checkbox { width:22px; height:22px; border:1px solid #555; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; cursor:pointer; }
-    .checkbox.done { background:#fff; color:#000; border-color:#fff; }
-    .task-text { font-size:14px; flex:1; }
-    .task-points { color:#666; font-size:12px; }
-    .focus-btn { width:100%; height:58px; border:none; border-radius:18px; background:#fff; color:#000; font-size:16px; font-weight:700; cursor:pointer; transition:.2s; }
-    .focus-btn:active { transform:scale(.97); }
-    .footer { text-align:center; color:#555; font-size:11px; margin-top:28px; letter-spacing:1px; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#0b0b0f;--card:#141419;--line:#24242b;--muted:#777;--soft:#999;--white:#fff}
+    html,body{background:var(--bg);color:var(--white);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;min-height:100%;}
+    body{padding-bottom:88px}
+    button{font:inherit}
+    .app{width:100%;max-width:480px;min-height:100vh;margin:auto;padding:26px 20px 30px}
+    .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:34px}
+    .logo{font-size:22px;font-weight:750;letter-spacing:3px}.day{font-size:11px;color:#666;letter-spacing:1.5px}
+    .page{display:none;animation:fade .2s ease}.page.active{display:block}@keyframes fade{from{opacity:.2;transform:translateY(5px)}to{opacity:1;transform:none}}
+    .quote{text-align:center;margin-bottom:30px}.quote-small{font-size:11px;color:#666;letter-spacing:2px;margin-bottom:11px}.quote-main{font-size:21px;line-height:1.6;font-weight:650}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:24px}
+    .score{padding:25px;text-align:center;margin-bottom:18px}.score-title{color:#888;font-size:13px;margin-bottom:11px}.score-number{font-size:62px;font-weight:800;line-height:1;margin-bottom:14px}.progress{height:5px;background:#292930;border-radius:10px;overflow:hidden}.progress-bar{width:40%;height:100%;background:#fff;border-radius:10px;transition:width .25s ease}
+    .tasks{padding:19px 20px;margin-bottom:18px}.section-title{font-size:15px;font-weight:650;margin-bottom:14px}.task{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid #222228}.task:last-child{border-bottom:none}.checkbox{width:22px;height:22px;border:1px solid #555;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:13px}.checkbox.done{background:#fff;color:#000;border-color:#fff}.task-text{font-size:14px;flex:1}.task-points{color:#666;font-size:12px}
+    .focus-btn,.primary-btn{width:100%;height:58px;border:none;border-radius:18px;background:#fff;color:#000;font-size:16px;font-weight:750;cursor:pointer}.focus-btn:active,.primary-btn:active{transform:scale(.97)}
+    .footer{text-align:center;color:#4d4d54;font-size:10px;margin-top:24px;letter-spacing:1px}
+    .focus-head{text-align:center;margin:4px 0 24px}.focus-label{font-size:11px;color:#666;letter-spacing:2px;margin-bottom:12px}.timer{font-size:76px;font-weight:800;letter-spacing:-3px;line-height:1;margin-bottom:24px;font-variant-numeric:tabular-nums}.timer-state{font-size:13px;color:#888;margin-bottom:20px}.timer-card{padding:26px 20px}.timer-actions{display:flex;gap:10px}.timer-actions button{height:50px;border-radius:15px;border:1px solid #303038;background:#1b1b21;color:#fff;cursor:pointer;flex:1}.timer-actions .main{background:#fff;color:#000;border-color:#fff}.presets{display:flex;gap:8px;margin-top:16px}.preset{flex:1;height:42px;border-radius:13px;border:1px solid #292930;background:transparent;color:#888;cursor:pointer;font-size:12px}.preset.active{border-color:#777;color:#fff}
+    .empty{padding:32px 22px;text-align:center}.empty-big{font-size:22px;font-weight:700;margin-bottom:9px}.empty p{color:#777;font-size:13px;line-height:1.7}
+    .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}.stat{padding:20px;border-radius:20px;background:var(--card);border:1px solid var(--line)}.stat-num{font-size:28px;font-weight:800;margin-bottom:6px}.stat-label{font-size:11px;color:#777}
+    .nav{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);width:min(440px,calc(100% - 28px));height:66px;padding:6px;border:1px solid #25252d;border-radius:22px;background:rgba(20,20,25,.94);backdrop-filter:blur(14px);display:flex;z-index:20;box-shadow:0 12px 40px rgba(0,0,0,.35)}.nav-item{border:0;background:transparent;color:#666;flex:1;border-radius:17px;cursor:pointer;font-size:11px}.nav-item .nav-icon{display:block;font-size:17px;margin-bottom:3px;line-height:1}.nav-item.active{background:#fff;color:#000}
+    @media(min-width:481px){.nav{bottom:20px}}
   </style>
 </head>
 <body>
 <div class="app">
-  <div class="top"><div class="logo">觉醒</div><div class="day">DAY 01 / 30</div></div>
-  <div class="quote"><div class="quote-small">TODAY'S QUESTION</div><div class="quote-main">今天，你准备成为<br>怎样的人？</div></div>
-  <div class="score"><div class="score-title">今日自律值</div><div class="score-number" id="score">40</div><div class="progress"><div class="progress-bar" id="progress"></div></div></div>
-  <div class="tasks">
-    <div class="tasks-title">今日任务</div>
-    <div class="task"><div class="checkbox done" onclick="completeTask(this)">✓</div><div class="task-text">运动 30 分钟</div><div class="task-points">+20</div></div>
-    <div class="task"><div class="checkbox done" onclick="completeTask(this)">✓</div><div class="task-text">学习 60 分钟</div><div class="task-points">+20</div></div>
-    <div class="task"><div class="checkbox" onclick="completeTask(this)"></div><div class="task-text">阅读 20 分钟</div><div class="task-points">+20</div></div>
-    <div class="task"><div class="checkbox" onclick="completeTask(this)"></div><div class="task-text">23:30 前睡觉</div><div class="task-points">+20</div></div>
-  </div>
-  <button class="focus-btn" onclick="startFocus()">开始专注</button>
-  <div class="footer">CONTROL YOURSELF · CHANGE YOUR LIFE</div>
+  <div class="top"><div class="logo">觉醒</div><div class="day">DAY <span id="dayNumber">01</span> / 30</div></div>
+
+  <section class="page active" id="homePage">
+    <div class="quote"><div class="quote-small">TODAY'S QUESTION</div><div class="quote-main">今天，你准备成为<br>怎样的人？</div></div>
+    <div class="card score"><div class="score-title">今日自律值</div><div class="score-number" id="score">40</div><div class="progress"><div class="progress-bar" id="progress"></div></div></div>
+    <div class="card tasks">
+      <div class="section-title">今日任务</div>
+      <div class="task"><div class="checkbox" data-index="0" onclick="completeTask(this)"></div><div class="task-text">运动 30 分钟</div><div class="task-points">+20</div></div>
+      <div class="task"><div class="checkbox" data-index="1" onclick="completeTask(this)"></div><div class="task-text">学习 60 分钟</div><div class="task-points">+20</div></div>
+      <div class="task"><div class="checkbox" data-index="2" onclick="completeTask(this)"></div><div class="task-text">阅读 20 分钟</div><div class="task-points">+20</div></div>
+      <div class="task"><div class="checkbox" data-index="3" onclick="completeTask(this)"></div><div class="task-text">23:30 前睡觉</div><div class="task-points">+20</div></div>
+    </div>
+    <button class="focus-btn" onclick="showPage('focus')">开始专注</button>
+    <div class="footer">CONTROL YOURSELF · CHANGE YOUR LIFE</div>
+  </section>
+
+  <section class="page" id="focusPage">
+    <div class="focus-head"><div class="focus-label">FOCUS MODE</div><div class="timer" id="timer">25:00</div><div class="timer-state" id="timerState">准备开始</div></div>
+    <div class="card timer-card">
+      <div class="timer-actions"><button class="main" id="timerBtn" onclick="toggleTimer()">开始</button><button onclick="resetTimer()">重置</button></div>
+      <div class="presets"><button class="preset active" data-min="25" onclick="setPreset(25,this)">25 分钟</button><button class="preset" data-min="45" onclick="setPreset(45,this)">45 分钟</button><button class="preset" data-min="60" onclick="setPreset(60,this)">60 分钟</button></div>
+    </div>
+    <div class="footer">ONE THING · ONE MOMENT</div>
+  </section>
+
+  <section class="page" id="planPage">
+    <div class="quote" style="margin-bottom:24px"><div class="quote-small">YOUR PLAN</div><div class="quote-main">把今天过好，<br>就是最好的计划。</div></div>
+    <div class="stat-grid"><div class="stat"><div class="stat-num" id="doneCount">2</div><div class="stat-label">今日完成</div></div><div class="stat"><div class="stat-num">30</div><div class="stat-label">计划天数</div></div></div>
+    <div class="card tasks"><div class="section-title">成长方向</div><div class="task"><div class="task-text">身体 · 规律运动</div><div class="task-points">01</div></div><div class="task"><div class="task-text">能力 · 深度学习</div><div class="task-points">02</div></div><div class="task"><div class="task-text">精神 · 阅读与思考</div><div class="task-points">03</div></div><div class="task"><div class="task-text">生活 · 规律作息</div><div class="task-points">04</div></div></div>
+  </section>
+
+  <section class="page" id="mePage">
+    <div class="quote"><div class="quote-small">ABOUT YOU</div><div class="quote-main">真正的自律，<br>是开始掌控自己。</div></div>
+    <div class="card empty"><div class="empty-big">觉醒 · DAY <span id="meDay">01</span></div><p>你不需要一下子改变人生。<br>只需要比昨天，多坚持一点。</p></div>
+  </section>
 </div>
+
+<nav class="nav">
+  <button class="nav-item active" data-page="home" onclick="showPage('home')"><span class="nav-icon">⌂</span>首页</button>
+  <button class="nav-item" data-page="focus" onclick="showPage('focus')"><span class="nav-icon">◷</span>专注</button>
+  <button class="nav-item" data-page="plan" onclick="showPage('plan')"><span class="nav-icon">☷</span>计划</button>
+  <button class="nav-item" data-page="me" onclick="showPage('me')"><span class="nav-icon">○</span>我的</button>
+</nav>
+
 <script>
-function completeTask(element) {
-  element.classList.toggle("done");
-  element.innerHTML = element.classList.contains("done") ? "✓" : "";
-  updateScore();
+const TASK_KEY='juexing_tasks_v2';
+let tasks=JSON.parse(localStorage.getItem(TASK_KEY)||'[true,true,false,false]');
+let totalSeconds=25*60, remaining=totalSeconds, timerId=null, running=false;
+
+function saveTasks(){localStorage.setItem(TASK_KEY,JSON.stringify(tasks));}
+function renderTasks(){
+  document.querySelectorAll('.checkbox').forEach((el,i)=>{const done=!!tasks[i];el.classList.toggle('done',done);el.innerHTML=done?'✓':'';});
+  const completed=tasks.filter(Boolean).length, score=completed*20;
+  document.getElementById('score').textContent=score;document.getElementById('progress').style.width=score+'%';document.getElementById('doneCount').textContent=completed;
 }
-function updateScore() {
-  const tasks = document.querySelectorAll(".checkbox");
-  let completed = 0;
-  tasks.forEach(task => { if (task.classList.contains("done")) completed++; });
-  const score = completed * 20;
-  document.getElementById("score").innerText = score;
-  document.getElementById("progress").style.width = score + "%";
+function completeTask(el){const i=Number(el.dataset.index);tasks[i]=!tasks[i];saveTasks();renderTasks();}
+function showPage(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(page+'Page').classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.page===page));
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-function startFocus() { alert("专注模式即将上线。\n\n下一阶段我们会加入真正的专注计时器。"); }
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("./sw.js").catch(err => console.log("Service Worker registration failed:", err));
-  });
+function updateTimer(){const m=Math.floor(remaining/60),s=remaining%60;document.getElementById('timer').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');}
+function toggleTimer(){
+  if(running){clearInterval(timerId);running=false;document.getElementById('timerBtn').textContent='继续';document.getElementById('timerState').textContent='已暂停';return;}
+  if(remaining<=0)return;
+  running=true;document.getElementById('timerBtn').textContent='暂停';document.getElementById('timerState').textContent='专注中 · 请勿打扰';
+  timerId=setInterval(()=>{remaining--;updateTimer();if(remaining<=0){clearInterval(timerId);running=false;document.getElementById('timerBtn').textContent='完成';document.getElementById('timerState').textContent='专注完成 · 做得很好';}},1000);
 }
+function resetTimer(){clearInterval(timerId);running=false;remaining=totalSeconds;updateTimer();document.getElementById('timerBtn').textContent='开始';document.getElementById('timerState').textContent='准备开始';}
+function setPreset(min,el){document.querySelectorAll('.preset').forEach(x=>x.classList.remove('active'));el.classList.add('active');totalSeconds=min*60;resetTimer();}
+renderTasks();updateTimer();
 </script>
 </body>
 </html>
